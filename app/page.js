@@ -1,12 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Card from "@/components/card"
 
-function Card({ children }) {
-  return (
-    <div className="border rounded-md border-gray-600 p-4">{children}</div>
-  );
-}
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,7 +21,7 @@ export default function Home() {
     isVisible && names.map((name, index) => <Card key={index}>{name}</Card>);
   return (
     <>
-      <div className="p-20 space-y-4">Hellom, {name}</div>
+      <div className="p-20 space-y-4">Helle, {name}</div>
       {cards}
 
       <div className="flex space-x-4">
