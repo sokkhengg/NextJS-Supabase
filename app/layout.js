@@ -10,7 +10,10 @@ const roboto = Roboto({
 })
 
 export const metadata = {
-  title: 'Sokheng',
+  title: {
+    template: '%s | Sokheng',
+    default: 'Sokheng'
+  },
   description: 'Sokheng Portfolio',
 }
 
