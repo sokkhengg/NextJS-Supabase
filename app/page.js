@@ -1,37 +1,34 @@
-"use client";
+import H1 from "@/components/h1"
+import { getPosts } from "@/lib/posts"
+import Link from 'next/link'
 
-import { useState } from "react";
-import Card from "@/components/card"
-
-
-export default function Home({searchParams}) {
-  const [isVisible, setIsVisible] = useState(true);
-  const [names, setNames] = useState(["thom", "ke", "sam"]);
-  const name = "Thom";
-  const handleClick = (e) => {
-    e.preventDefault();
-    setIsVisible(!isVisible);
-  };
-
-  const handleAdd = () => {
-    setNames([...names, "new name"])
-  }
-
-  const cards =
-    isVisible && names.map((name, index) => <Card key={index}>{name}</Card>);
-
-  // console.log(searchParams);
-  // if (searchParams) throw new Error("error is detected")
-  
+export default async function Home() {
+  const { posts } = await getPosts({
+    newest: true, limit: 3
+  })
   return (
     <>
-      <div className="space-y-4">Helle, {name}</div>
-      {cards}
+      <section className="mb-8">
+        <H1>Welcome to my page!</H1>
+        <p>My name is Sokheng, I am a web developer.</p>
+        <p>
+          Checkout my <Link href="/about/projects" className="underline">projects</Link>, <Link href="/photos" className="underline">photos</Link> and <Link href="/blog" className="underline">blog</Link>.
+        </p>
+      </section>
 
-      <div className="flex space-x-4">
-        <button onClick={handleClick}>{isVisible ? "Hide" : "Show"}</button>
-        <button onClick={handleAdd}>Add</button>
-      </div>
+      <section>
+        <h2 className="text-lg mb-8">Latest on the blog</h2>
+        <ul className="font-mono">
+          {posts.map(post => <li key={post.slug}>
+            <span className="text-gray-400">
+              {post.frontmatter.date}&nbsp;</span>
+            <Link href={`/blog/${post.slug}`} className="underline">
+              {post.frontmatter.title}
+            </Link>
+
+          </li>)}
+        </ul>
+      </section>
     </>
-  );
+  )
 }
